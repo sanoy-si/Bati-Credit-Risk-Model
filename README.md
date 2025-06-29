@@ -6,6 +6,14 @@ This project develops an end-to-end credit scoring model for Bati Bank's new buy
 
 ## Table of Contents
 - [Credit Scoring Business Understanding](#credit-scoring-business-understanding)
+- [Project Structure](#project-structure)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Running Tests](#running-tests)
+- [API Reference](#api-reference)
 
 ---
 
@@ -49,3 +57,115 @@ This trade-off is central to financial modeling.
 **Conclusion for Bati Bank:** In a regulated context, the standard approach is to **start with a simple, interpretable model** like Logistic Regression. We will build this first to serve as our compliant, understandable baseline. Then, we can develop a complex model like Gradient Boosting as a "challenger model" to see how much performance we can gain. The final decision would involve weighing the performance lift against the increased regulatory and maintenance burden.
 
 ---
+
+## Project Structure
+```
+credit-risk-model/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── data/
+│   ├── raw/
+│   └── processed/
+├── notebooks/
+│   └── 1.0-eda.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── api/
+│   │   ├── main.py
+│   │   └── pydantic_models.py
+│   ├── data_processing.py
+│   ├── predict.py
+│   └── train.py
+├── tests/
+│   └── test_data_processing.py
+├── .gitignore
+├── Dockerfile
+├── docker-compose.yml
+├── README.md
+└── requirements.txt
+
+```
+
+---
+
+## Technology Stack
+- **Language:** Python 3.10+
+- **Core Libraries:** Pandas, NumPy, Scikit-learn
+- **MLOps & Experiment Tracking:** MLflow
+- **API & Deployment:** FastAPI, Uvicorn, Docker
+- **Testing & Quality:** Pytest, flake8
+
+---
+
+## Getting Started
+
+Follow these instructions to get a local copy of the project up and running for development and testing.
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+- Python 3.10+
+- `pip` (Python package installer)
+- `git` (for cloning the repository)
+
+### Installation
+
+1.  **Clone the Repository**
+    Open your terminal and clone the project repository:
+    ```sh
+    git clone https://github.com/sanoy-si/Bati-Credit-Risk-Model
+    cd credit-risk-model
+    ```
+
+2.  **Download the Data**
+    This project requires the transaction data from the [Xente Challenge on Kaggle](https://www.kaggle.com/competitions/xente-challenge/data).
+    - Download the `transactions.csv` file.
+    - Place the downloaded file into the following directory: `data/raw/`.
+    The final path should be `credit-risk-model/data/raw/transactions.csv`.
+    *(Note: The `data/` directory is in `.gitignore` and will not be committed to the repository).*
+
+3.  **Create and Activate a Virtual Environment**
+    It is a best practice to create a virtual environment to isolate project dependencies.
+    ```sh
+    # Create the virtual environment
+    python -m venv venv
+
+    # Activate the environment
+    # On macOS/Linux:
+    source venv/bin/activate
+    # On Windows:
+    venv\Scripts\activate
+    ```
+    Your terminal prompt should now be prefixed with `(venv)`.
+
+4.  **Install Dependencies**
+    Install all required Python packages from the `requirements.txt` file.
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+5.  **Set Up Environment Variables**
+    The application uses environment variables for configuration (e.g., MLflow server URI).
+    - Create a copy of the example file:
+      ```sh
+      cp .env.example .env
+      ```
+    - Open the newly created `.env` file and update the variables as needed for your local setup.
+
+You are now ready to start working on the project!
+
+---
+## Usage
+
+*(This section will be filled out once the training and prediction scripts are functional.)*
+
+---
+## Running Tests
+
+*(This section will be filled out once the tests are written.)*
+
+---
+## API Reference
+
+*(This section will be filled out once the API is developed.)*
