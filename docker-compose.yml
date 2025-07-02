@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api:
+    build: .  
+    container_name: credit_risk_api
+    ports:
+      - "8000:8000" 
+    volumes:
+      - ./src:/app/src
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow_server:5000
+    depends_on:
+  mlflow_server:
+    image: ghcr.io/mlflow/mlflow:v2.11.1 
+    container_name: mlflow_tracking_server
+    ports:
+      - "5000:5000" 
+    volumes:
+      - ./mlruns:/mlruns
+    environment:
+      - MLFLOW_HOST=0.0.0.0
+    command: >
+      mlflow server
+      --backend-store-uri file:///mlruns
+      --default-artifact-root file:///mlruns
+      --host 0.0.0.0
