@@ -1,7 +1,5 @@
 # Bati Bank - Credit Scoring Model
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-
 This project develops an end-to-end credit scoring model for Bati Bank's new buy-now-pay-later (BNPL) service. By analyzing customer transaction data from an eCommerce partner, we build a model that predicts credit risk, assigns a credit score, and helps determine appropriate loan terms for new applicants. The project follows MLOps best practices, including automated data processing, experiment tracking with MLflow, and deployment as a containerized API with a CI/CD pipeline.
 
 ## Table of Contents
@@ -153,19 +151,59 @@ Before you begin, ensure you have the following installed on your system:
       ```
     - Open the newly created `.env` file and update the variables as needed for your local setup.
 
-You are now ready to start working on the project!
-
 ---
 ## Usage
 
-*(This section will be filled out once the training and prediction scripts are functional.)*
+You can interact with this project in two main ways: by reproducing the training pipeline or by running the final prediction API.
+
+### 1. Data Processing and Model Training
+
+To run the full data processing and model training pipeline from your local environment:
+
+1.  **Start the MLflow UI**
+    In a new terminal, navigate to the project root and run:
+    ```sh
+    mlflow ui
+    ```
+    This launches the MLflow dashboard, which is accessible at `http://127.0.0.1:5000`.
+
+2.  **Run Data Processing**
+    In another terminal (with your virtual environment activated), run the data processing script. This creates the features and the target variable.
+    ```sh
+    python src/data_processing.py
+    ```
+
+3.  **Run Model Training**
+    Train the models using the training script. The results will be logged to MLflow automatically.
+    ```sh
+    # Train Logistic Regression
+    python src/train.py logistic_regression
+
+    # Train Random Forest and register it in the Model Registry
+    python src/train.py random_forest
+    ```
+
+### 2. Running the API Service
+
+This is the primary method for using the final model. The `docker-compose` command starts both the API and the required MLflow server in containers.
+
+1.  **Prerequisite:** Ensure you have run the training for `random_forest` at least once to have a model named `CreditRiskModel-RandomForest` in the MLflow Model Registry.
+
+2.  **Launch the Services**
+    From the project root directory, run:
+    ```sh
+    docker-compose up --build
+    ```
+    Wait for the logs to indicate that both the `mlflow_server` and `credit_risk_api` containers are up and running. The API will be available at `http://127.0.0.1:8000`.
 
 ---
+
 ## Running Tests
 
-*(This section will be filled out once the tests are written.)*
+To run the automated unit tests for the project, execute the following command from the root directory:
+```sh
+pytest
+```
 
----
-## API Reference
+The tests validate the core logic within src/data_processing.py, ensuring that feature and the target variable are created correctly and consistently. The CI/CD pipeline in GitHub Actions also runs these tests automatically on every push to the main branch.
 
-*(This section will be filled out once the API is developed.)*
