@@ -206,3 +206,52 @@ pytest
 
 The tests validate the core logic within src/data_processing.py, ensuring that feature and the target variable are created correctly and consistently. The CI/CD pipeline in GitHub Actions also runs these tests automatically on every push to the main branch.
 
+## API Reference
+
+The API provides one main endpoint for predictions. Interactive, auto-generated documentation is available at the following URLs when the service is running:
+
+*   **Swagger UI:** `http://127.0.0.1:8000/docs`
+*   **ReDoc:** `http://127.0.0.1:8000/redoc`
+
+#### `POST /predict`
+This endpoint predicts the credit risk probability for a single customer based on their features.
+
+**Request Body:**
+The body must be a JSON object containing the customer features before processing.
+
+```json
+{
+  "total_monetary_value": 800.0,
+  "avg_monetary_value": 160.0,
+  "std_monetary_value": 96.17,
+  "transaction_count": 5,
+  "total_fraud_transactions": 1,
+  "has_committed_fraud": 1,
+  "num_unique_products": 3,
+  "avg_transaction_hour": 10.5,
+  "most_freq_product_category": "catA",
+  "most_freq_provider": "Prov1",
+  "most_freq_channel": "Ch1"
+}
+```
+**Success Response (200 OK):**
+The response is a JSON object with the calculated risk probability.
+```json
+{
+  "risk_probability": 0.2345
+}
+```
+
+Example curl Request:
+```sh
+curl -X 'POST' \
+  'http://127.0.0.1:8000/predict' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "total_monetary_value": 800, "avg_monetary_value": 160, "std_monetary_value": 96.17,
+    "transaction_count": 5, "total_fraud_transactions": 1, "has_committed_fraud": 1,
+    "num_unique_products": 3, "avg_transaction_hour": 10.5, "most_freq_product_category": "catA",
+    "most_freq_provider": "Prov1", "most_freq_channel": "Ch1"
+  }'
+```
