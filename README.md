@@ -11,6 +11,7 @@ This project develops an end-to-end credit scoring model for Bati Bank's new buy
   - [Installation](#installation)
 - [Usage](#usage)
 - [Running Tests](#running-tests)
+- [API Reference](#api-reference)
 
 ---
 
